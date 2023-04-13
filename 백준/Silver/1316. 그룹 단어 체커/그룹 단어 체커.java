@@ -11,33 +11,33 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
         int cnt = 0;
 
-        for (int i =0;i<N ;i++ ) {
-            String str=br.readLine();
-            if(isGroupWord(str)){
+        for (int i = 0; i < N; i++) {
+            String word = br.readLine();
+            int[] alphabet = new int[26];
+            for (int j = 0; j < 26; j++) {
+                alphabet[j] = -1;
+            }
+
+
+            boolean isGroupWord = true;
+
+            for (int j = 0; j < word.length(); j++) {
+                int idx = word.charAt(j) - 'a';
+
+                if (alphabet[idx] != -1) {
+                    if (j - alphabet[idx] > 1) {
+                        isGroupWord = false;
+                        break;
+                    }
+                }
+                alphabet[idx] = j;
+            }
+            if (isGroupWord) {
                 cnt++;
             }
         }
+
         System.out.println(cnt);
-    }
-
-    public static boolean isGroupWord(String str) {
-        boolean[] isAppeared = new boolean[26];
-        char prevChar = str.charAt(0);
-        isAppeared[prevChar-'a']=true;
-
-        for(int i =1;i<str.length();i++){
-            char curChar = str.charAt(i);
-            if(prevChar!=curChar){
-                if(!isAppeared[curChar-'a']){
-                    isAppeared[curChar-'a'] = true;
-                    prevChar=curChar;
-                }else{
-                    return false;
-                }
-            }
-            
-        }
-       return true;
     }
 
 }
